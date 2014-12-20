@@ -11,5 +11,5 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^node/', include(getNodes)),
+    url(r'^node/', include('inventory.urls', namespace='inventory')),
     )
