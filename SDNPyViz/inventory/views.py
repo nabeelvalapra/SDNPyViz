@@ -1,7 +1,7 @@
+from django.core.serializers import json
 from django.http.response import HttpResponse
-from django.shortcuts import render
-from django.views.generic import View
 import requests
+import json
 # Create your views here.
 
 NODE_URL = '/controller/nb/v2/switchmanager/default/nodes'
@@ -27,8 +27,15 @@ def create_get_request(url, credential):
     r = requests.get(url, auth=credential)
 
     if r.status_code == 200:
-        return r.content
+        return r.json()
 
+def get_switch(json_data):
+    """
+    this function return the array of the switch
+    :param json_data:
+    :return:
+    """
+    return [node['node']['id'] for node in json_data['nodeProperties'] or []]
 
 def get_nodes(request):
     """
@@ -37,4 +44,6 @@ def get_nodes(request):
     """
     url = create_url('localhost', '8080', NODE_URL)
     response = create_get_request(url, ('admin', 'admin'))
-    return HttpResponse(response, content_type='json')
+
+    response = {'nodes': get_switch(response)}
+    return HttpResponse(json.dumps(response), content_type='json')
