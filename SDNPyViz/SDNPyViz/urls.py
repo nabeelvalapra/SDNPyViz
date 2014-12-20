@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
-from inventory.views import get_nodes
 
 admin.autodiscover()
 
