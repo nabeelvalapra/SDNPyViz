@@ -6,6 +6,7 @@ import json
 
 NODE_URL = '/controller/nb/v2/switchmanager/default/nodes'
 NODE_INFO_URL = '/controller/nb/v2/switchmanager/{containerName}/node/'
+ODL_FLOWS = '/controller/nb/v2/flowprogrammer/default'
 
 def create_url(ip, port, url):
     """
@@ -46,4 +47,15 @@ def get_nodes(request):
     response = create_get_request(url, ('admin', 'admin'))
 
     response = {'nodes': get_switch(response)}
-    return HttpResponse(json.dumps(response), content_type='json')
+    return HttpResponse(json.dumps(response), content_type='application/json')
+
+def get_flows(request):
+    """
+    return the json format for all the flows
+    :param request:
+    :return:
+    """
+    url = create_url('localhost', '8080', ODL_FLOWS)
+    response = create_get_request(url, ('admin', 'admin'))
+
+    return HttpResponse(json.dumps(response), content_type='application/json')
