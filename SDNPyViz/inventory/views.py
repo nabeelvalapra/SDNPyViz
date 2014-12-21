@@ -2,6 +2,8 @@ from django.core.serializers import json
 from django.http.response import HttpResponse
 import requests
 import json
+from django.template import RequestContext
+from django.shortcuts import render_to_response
 # Create your views here.
 
 NODE_URL = '/controller/nb/v2/switchmanager/default/nodes'
@@ -57,5 +59,18 @@ def get_flows(request):
     """
     url = create_url('localhost', '8080', ODL_FLOWS)
     response = create_get_request(url, ('admin', 'admin'))
+
+    # Request the context of the request.
+    # The context contains information such as the client's machine details, for example.
+    context = RequestContext(request)
+
+    # Construct a dictionary to pass to the template engine as its context.
+    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
+    context_dict = {'flows': response['flowConfig']}
+
+    # Return a rendered response to send to the client.
+    # We make use of the shortcut function to make our lives easier.
+    # Note that the first parameter is the template we wish to use.
+    return render_to_response('inventory/base.html', context_dict, context)
 
     return HttpResponse(json.dumps(response), content_type='application/json')
