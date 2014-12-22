@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_cron',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -82,3 +83,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = ('/Users/subh/PycharmProjects/SDNPyViz/SDNPyViz/templates/',)
+
+from apscheduler.schedulers.background import BackgroundScheduler
+sched = BackgroundScheduler()
+
+def hello_world():
+    print "hello world"
+sched.add_job(hello_world, 'interval', seconds=5)
+sched.start()
