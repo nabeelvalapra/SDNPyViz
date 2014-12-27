@@ -86,6 +86,8 @@ def get_flows(request):
     # Construct a dictionary to pass to the template engine as its context.
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
     context_dict = {'flows': response['flowConfig']}
+    return render_to_response('inventory/port.html',{'json':json.dumps(response)}, context_instance=RequestContext(request))
+
 
     # Return a rendered response to send to the client.
     # We make use of the shortcut function to make our lives easier.
