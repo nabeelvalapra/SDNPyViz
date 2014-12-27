@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Flows</title>
+    </head>
+
+    <body>
+        <h1>Switch FLows</h1>
+
+        <table border=1 style="width:100%">
+                {% if flows %}
+                   {% for flow in flows %}
+                        <tr><td>{{flow}}</td><tr>
+                   {% endfor %}
+                {% endif %}
+        </table>
+    </body>
+
+</html>

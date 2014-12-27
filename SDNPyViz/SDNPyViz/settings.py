@@ -80,3 +80,13 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TEMPLATE_DIRS = ('/Users/subh/PycharmProjects/SDNPyViz/SDNPyViz/templates/',)
+
+from apscheduler.schedulers.background import BackgroundScheduler
+sched = BackgroundScheduler()
+
+def hello_world():
+    print "hello world"
+sched.add_job(hello_world, 'interval', seconds=5)
+sched.start()
